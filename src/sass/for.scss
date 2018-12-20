@@ -1,0 +1,69 @@
+$col : 18;
+// 居中
+%center{
+    position:absolute;
+    left: 50%;
+    top: 50%;
+    transform:translate(-50%,-50%);
+}
+h1{
+    @extend %center;
+}
+@for $i from 1 through 6{
+    h#{$i}{
+        width: 200 * $i + px;
+        height:100px;
+        color: #58bc58 * $i * 0.4;
+        background-color : darken(yellow,$i*10);
+    }
+}
+@for $j from 1 through $col{
+    .col-xs-#{$j}{
+        width : percentage($j/$col);
+    }
+}
+
+body{background: #000;}
+.box{
+    @extend h1;
+    width: 300px;
+    height: 300px;
+    margin: 150px auto;
+    position: relative;
+    perspective: 3000px;
+    transform-style: preserve-3d;
+    -webkit-animation:rotate3d 30s infinite linear;
+}
+.box:after{
+    content: '';
+    width: 1px;
+    height: 500px;
+    background-color: #ff0;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform:translateX(150px) translateY(-100px);
+}
+.box div{
+    width: 100%;
+    height: 100%;
+    border: 1px solid #fff;
+    position: absolute;
+    border-radius: 100%;
+}
+$line : 5;
+@for $k from 1 through $line{
+    .box .lineY#{$k}{
+        transform: rotateY(180/$line*$k+ deg);
+    }
+    .box .lineX#{$k}{
+        transform: rotateX(180/$line*$k+ deg);
+    }
+
+}
+
+@-webkit-keyframes rotate3d{
+    0%{transform:rotateZ(-30deg) rotateY(0deg);}
+    100%{transform:rotateZ(-30deg) rotateY(360deg);}
+}
